@@ -14,7 +14,7 @@ public class ScanService extends Service {
     private static final String TAG = "ScanService";
     private static final String LIVE_CARD_ID = "scan";
     
-    private ScanMainDrawer mCallback;
+    //private ScanMainDrawer mCallback;
 
     private TimelineManager mTimelineManager;
     private LiveCard mLiveCard;
@@ -63,9 +63,11 @@ public class ScanService extends Service {
     public void onDestroy() {
         if (mLiveCard != null && mLiveCard.isPublished()) {
             Log.d(TAG, "Unpublishing LiveCard");
+            /*
             if (mCallback != null) {
                 mLiveCard.getSurfaceHolder().removeCallback(mCallback);
             }
+            */
             mLiveCard.unpublish();
             mLiveCard = null;
         }
