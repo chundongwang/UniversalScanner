@@ -9,8 +9,8 @@
 
     <SurfaceView
         android:id="@+id/camera_preview"
-        android:layout_width="320dp"
-        android:layout_height="240dp" />
+        android:layout_width="640dp"
+        android:layout_height="480dp" />
 
     <TextView
         android:id="@+id/alignSymbol"

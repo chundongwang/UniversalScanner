@@ -71,7 +71,7 @@ public class ScanCaptureActivity extends Activity {
                 
                 /*int widthMeasured = mPreview.getMeasuredWidth();
                 int heightMeasured = mPreview.getMeasuredHeight();*/
-                parameters.setPreviewSize(320, 240); // hard coded the largest size for now
+                parameters.setPreviewSize(640, 480); // hard coded the largest size for now
                 mCamera.setParameters(parameters);
                 //mCamera.setZoomChangeListener(this);
                 
