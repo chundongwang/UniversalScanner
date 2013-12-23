@@ -13,12 +13,21 @@
         android:layout_height="480dp" />
 
     <TextView
-        android:id="@+id/alignSymbol"
+        android:id="@+id/align_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textColor="#ff0000"
         android:text="---------------------------------------------------" />
+
+    <TextView
+        android:id="@+id/candidate_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/camera_preview"
+        android:layout_alignRight="@id/camera_preview"
+        android:textColor="#0000ff"
+        android:text="------------" />
 
 </RelativeLayout>

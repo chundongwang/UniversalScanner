@@ -2,12 +2,14 @@ package com.dada;
 
 import com.dada.universalscanner.R;
 import android.app.Activity;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ScanCaptureActivity extends Activity {
@@ -18,6 +20,7 @@ public class ScanCaptureActivity extends Activity {
 	private Camera mCamera;
 	private boolean mInPreview = false;
     private boolean mCameraConfigured = false;
+    private TextView mCandidateString;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class ScanCaptureActivity extends Activity {
 		mPreview = (SurfaceView) findViewById(R.id.camera_preview);
 		mPreviewHolder = mPreview.getHolder();
 		mPreviewHolder.addCallback(surfaceCallback);
+		
+		mCandidateString = (TextView) findViewById(R.id.candidate_string);
 	}
 
 	@Override
@@ -65,6 +70,7 @@ public class ScanCaptureActivity extends Activity {
                 Toast.makeText(ScanCaptureActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
             
+            
             if ( !mCameraConfigured ) 
             {
                 Camera.Parameters parameters = mCamera.getParameters();
@@ -74,6 +80,7 @@ public class ScanCaptureActivity extends Activity {
                 parameters.setPreviewSize(640, 480); // hard coded the largest size for now
                 mCamera.setParameters(parameters);
                 //mCamera.setZoomChangeListener(this);
+                mCamera.setPreviewCallback(previewCallback);
                 
                 mCameraConfigured = true;
             }
@@ -90,6 +97,22 @@ public class ScanCaptureActivity extends Activity {
             mInPreview = true;
         }
     }
+    
+    BarcodeScanner mScanner = new UPCBarcodeScanner();
+    Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+
+		@Override
+		public void onPreviewFrame(byte[] data, Camera camera) {
+			// TODO Auto-generated method stub
+			Camera.Parameters parameters = camera.getParameters();
+			Camera.Size imageSize = parameters.getPreviewSize();
+			int bytePerPixel = ImageFormat.getBitsPerPixel(parameters.getPreviewFormat()) / 8;
+			String result = mScanner.Scan(data, imageSize.width, imageSize.height, bytePerPixel);
+			if (result != null) {
+				mCandidateString.setText(result);
+			}
+		}
+    };
 
     SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
         public void surfaceCreated( SurfaceHolder holder ) 
