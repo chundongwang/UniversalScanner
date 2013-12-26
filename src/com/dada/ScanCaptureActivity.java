@@ -98,7 +98,7 @@ public class ScanCaptureActivity extends Activity {
         }
     }
     
-    BarcodeScanner mScanner;
+    BarcodeScanner mScanner = new UPCBarcodeScanner();
     Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
 
 		@Override
@@ -107,8 +107,7 @@ public class ScanCaptureActivity extends Activity {
 			Camera.Parameters parameters = camera.getParameters();
 			Camera.Size imageSize = parameters.getPreviewSize();
 			int bytePerPixel = ImageFormat.getBitsPerPixel(parameters.getPreviewFormat()) / 8;
-			UPCBarcodeScanner scanner = new UPCBarcodeScanner(data, imageSize.width, imageSize.height, bytePerPixel);
-			String result = scanner.Scan(data, imageSize.width, imageSize.height, bytePerPixel);
+			String result = mScanner.Scan(data, imageSize.width, imageSize.height, bytePerPixel);
 			if (result != null) {
 				mCandidateString.setText(result);
 			}
